@@ -16,7 +16,7 @@ export const FeaturedCard = ({ item, onPress }: Props) => {
             <View className="flex flex-row items-center bg-white/90 px-3 py-1.5 rounded-full absolute top-5 right-5">
                 <Image source={icons.star} className={"size=3.5"} />
                 <Text className={"text-xs font-rubik-bold text-primary-300"}>
-
+                    {item.rating}
                 </Text>
             </View>
 
@@ -25,14 +25,14 @@ export const FeaturedCard = ({ item, onPress }: Props) => {
                     className="text-xl font-rubik-extrabold text-white"
                     numberOfLines={1}
                 >
-                    New York Apartment
+                    {item.name}
                 </Text>
                 <Text className={"text-xs font-rubik text-white"}>
-                    22 W 15th St.New York
+                    {item.address}
                 </Text>
                 <View className="flex flex-row items-center justify-between w-full">
                     <Text className="text-xl font-rubik-extrabold text-white">
-                        $25,000
+                        {item.price}
                     </Text>
                     <Image source={icons.heart} className="size-5" />
                 </View>

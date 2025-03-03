@@ -1,4 +1,4 @@
-import {FlatList, Image, SafeAreaView, Text, TouchableOpacity, View, Button} from "react-native";
+import {FlatList, Image, SafeAreaView, Text, TouchableOpacity, View, Button, ActivityIndicator} from "react-native";
 import icons from "@/constants/icons";
 import Search from "@/components/Search";
 import {Card, FeaturedCard} from "@/components/Cards";
@@ -10,6 +10,7 @@ import {useAppwrite} from "@/lib/useAppwrite";
 import {getLatestProperties, getProperties} from "@/lib/appwrite";
 import {param} from "ts-interface-checker";
 import {useEffect} from "react";
+import NoResults from "@/components/NoResults";
 
 export default function Index() {
     const { user } = useGlobalContext();
@@ -50,14 +51,21 @@ export default function Index() {
             {/*<Button title="Seed" onPress={seed} />*/}
             <FlatList
                 data={properties}
-                renderItem={({item}) => (
-                    <Card item={item} onPress={() => handleCardPress(item.$id)}/>
-                )}
-                keyExtractor={(item => item.toString())}
                 numColumns={2}
-                contentContainerClassName={"pb-32"}
-                columnWrapperClassName={"flex gap-5 px-5"}
+                renderItem={({ item }) => (
+                    <Card item={item} onPress={() => handleCardPress(item.$id)} />
+                )}
+                keyExtractor={(item) => item.$id}
+                contentContainerClassName="pb-32"
+                columnWrapperClassName="flex gap-5 px-5"
                 showsVerticalScrollIndicator={false}
+                ListEmptyComponent={
+                    loading ? (
+                        <ActivityIndicator size="large" className="text-primary-300 mt-5" />
+                    ) : (
+                        <NoResults />
+                    )
+                }
                 ListHeaderComponent={
                     <View className={"px-5"}>
                         <View className={"flex flex-row items-center justify-between mt-5"}>
@@ -86,16 +94,21 @@ export default function Index() {
                                     </Text>
                                 </TouchableOpacity>
                             </View>
+                            {latestPropertiesLoading ?
+                                <ActivityIndicator size={"large"} className={"text-primary-300"}/> :
+                                !latestProperties || latestProperties.length === 0 ? <NoResults/> : (
 
-                            <FlatList
-                                data={latestProperties}
-                                renderItem={({item}) => <FeaturedCard item={item} onPress={() => handleCardPress(item.$id)}/>}
-                                keyExtractor={(item) => item.toString()}
-                                horizontal
-                                bounces={false}
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerClassName={"flex gap-5 mt-5"}
-                            />
+                                    <FlatList
+                                        data={latestProperties}
+                                        renderItem={({item}) => <FeaturedCard item={item}
+                                                                              onPress={() => handleCardPress(item.$id)}/>}
+                                        keyExtractor={(item) => item.toString()}
+                                        horizontal
+                                        bounces={false}
+                                        showsHorizontalScrollIndicator={false}
+                                        contentContainerClassName={"flex gap-5 mt-5"}
+                                    />
+                                )}
 
                             <View className={"flex flex-row items-center justify-between mt-3"}>
                                 <Text className={"text-xl font-rubik-bold text-black-300"}>
