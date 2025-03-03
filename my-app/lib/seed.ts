@@ -18,7 +18,7 @@ const propertyTypes = [
     "House",
     "Townhouse",
     "Condo",
-    "Duplexe",
+    "Duplex",
     "Studio",
     "Villa",
     "Apartment",
@@ -143,9 +143,7 @@ async function seed() {
             const assignedReviews = getRandomSubset(reviews, 5, 7); // 5 to 7 reviews
             const assignedGalleries = getRandomSubset(galleries, 3, 8); // 3 to 8 galleries
 
-            const selectedFacilities = facilities
-                .sort(() => 0.5 - Math.random())
-                .slice(0, Math.floor(Math.random() * facilities.length) + 1);
+            const selectedFacility = facilities[Math.floor(Math.random() * facilities.length)];
 
             const image =
                 propertiesImages.length - 1 >= i
@@ -165,14 +163,14 @@ async function seed() {
                     address: `123 Property Street, City ${i}`,
                     geolocation: `192.168.1.${i}, 192.168.1.${i}`,
                     price: Math.floor(Math.random() * 9000) + 1000,
-                    area: Math.floor(Math.random() * 3000) + 500,
-                    bedrooms: Math.floor(Math.random() * 5) + 1,
-                    bathrooms: Math.floor(Math.random() * 5) + 1,
+                    // area: Math.floor(Math.random() * 3000) + 500,
+                    // bedrooms: Math.floor(Math.random() * 5) + 1,
+                    // bathrooms: Math.floor(Math.random() * 5) + 1,
                     rating: Math.floor(Math.random() * 5) + 1,
-                    facilities: selectedFacilities,
+                    facilities: selectedFacility,
                     image: image,
                     agent: assignedAgent.$id,
-                    reviews: assignedReviews.map((review) => review.$id),
+                    //reviews: assignedReviews.map((review) => review.$id),
                     gallery: assignedGalleries.map((gallery) => gallery.$id),
                 }
             );

@@ -50,7 +50,9 @@ export default function Index() {
             {/*<Button title="Seed" onPress={seed} />*/}
             <FlatList
                 data={properties}
-                renderItem={({item}) => <Card item={item} onPress={() => handleCardPress(item.$id)}/>}
+                renderItem={({item}) => (
+                    <Card item={item} onPress={() => handleCardPress(item.$id)}/>
+                )}
                 keyExtractor={(item => item.toString())}
                 numColumns={2}
                 contentContainerClassName={"pb-32"}
