@@ -17,9 +17,9 @@ This project is a **React Native-based** application that provides a real estate
 - Home, Explore, Profile Navigation
 - Google Login
 - Menu
- - Home: Main Home Screen
- - Explore: Searching Data
- - Profile: Logout
+  - Home: Main Home Screen
+  - Explore: Searching Data
+  - Profile: Logout
 
 ## 💻 Run
 ~~~
